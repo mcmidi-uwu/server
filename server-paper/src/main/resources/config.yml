@@ -1,0 +1,19 @@
+# What port the mcmidi server will use.
+# Must be an integer between 0-65535 inclusive.
+port: 61672
+
+# If you want the mcmidi server to use SSL/HTTPS, see below.
+# For information on how to set this up, see these resources:
+# https://sparkjava.com/documentation#how-do-i-enable-sslhttps
+# https://certbot.eff.org/instructions
+# https://ordina-jworks.github.io/security/2019/08/14/Using-Lets-Encrypt-Certificates-In-Java.html
+secure:
+  # Whether or not the mcmidi server will attempt to use SSL/HTTPS.
+  # Must be either true or false.
+  enabled: false
+  # What keystore file to use.
+  # Must be a relative filepath from the server's root directory to the keystore file.
+  keystore_file: "keystore.jks"
+  # What keystore password to use.
+  # Must be a String.
+  keystore_password: "password"

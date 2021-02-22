@@ -1,0 +1,7 @@
+name: server
+version: @version@
+main: xyz.tehbrian.mcmidi.serverpaper.ServerPlugin
+api-version: 1.16
+authors: [ TehBrian ]
+description: Hosts a web server that receives note requests and relays them to other plugins.
+website: https://github.com/mcmidi-uwu/server
