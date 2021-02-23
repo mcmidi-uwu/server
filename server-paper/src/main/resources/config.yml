@@ -10,7 +10,7 @@ port: 61672
 secure:
   # Whether or not the mcmidi server will attempt to use SSL/HTTPS.
   # Must be either true or false.
-  enabled: false
+  enabled: true
   # What keystore file to use.
   # Must be a relative filepath from the server's root directory to the keystore file.
   keystore_file: "keystore.jks"
