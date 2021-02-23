@@ -5,37 +5,35 @@ package xyz.tehbrian.mcmidi.serverapi;
  * provides helper methods for interacting with and choosing pitches.
  */
 public enum Pitch {
-    Fs1(0.5F, 0),
-    G1(0.529732F, 1),
-    Gs1(0.561231F, 2),
-    A1(0.594604F, 3),
-    As1(0.629961F, 4),
-    B1(0.667420F, 5),
-    C1(0.707107F, 6),
-    Cs1(0.749154F, 7),
-    D1(0.793701F, 8),
-    Ds1(0.840896F, 9),
-    E1(0.890899F, 10),
-    F1(0.943874F, 11),
-    Fs2(1F, 12),
-    G2(1.059463F, 13),
-    Gs2(1.122462F, 14),
-    A2(1.189207F, 15),
-    As2(1.259921F, 16),
-    B2(1.334840F, 17),
-    C2(1.414214F, 18),
-    Cs2(1.498307F, 19),
-    D2(1.587401F, 20),
-    Ds2(1.681793F, 21),
-    E2(1.781797F, 22),
-    F2(1.887749F, 23),
-    Fs3(2F, 24);
+    Fs1(0),
+    G1(1),
+    Gs1(2),
+    A1(3),
+    As1(4),
+    B1(5),
+    C1(6),
+    Cs1(7),
+    D1(8),
+    Ds1(9),
+    E1(10),
+    F1(11),
+    Fs2(12),
+    G2(13),
+    Gs2(14),
+    A2(15),
+    As2(16),
+    B2(17),
+    C2(18),
+    Cs2(19),
+    D2(20),
+    Ds2(21),
+    E2(22),
+    F2(23),
+    Fs3(24);
 
-    private final float pitchAsFloat;
     private final int numOfClicks;
 
-    Pitch(final float pitchAsFloat, final int numOfClicks) {
-        this.pitchAsFloat = pitchAsFloat;
+    Pitch(final int numOfClicks) {
         this.numOfClicks = numOfClicks;
     }
 
@@ -215,7 +213,9 @@ public enum Pitch {
      * @return a float
      */
     public float asFloat() {
-        return this.pitchAsFloat;
+        // For some information on how this works, see:
+        // https://minecraft.gamepedia.com/Note_Block
+        return (float) Math.pow(2, ((this.numOfClicks - 12F) / 12));
     }
 
     /**
