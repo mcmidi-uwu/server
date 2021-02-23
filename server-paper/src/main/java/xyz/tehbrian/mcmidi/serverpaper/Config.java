@@ -52,17 +52,17 @@ public class Config {
         this.secureKeystorePassword = this.config.getString("secure.keystore_password");
 
         if (this.port < PORT_MIN || this.port > PORT_MAX) {
-            this.logger.severe("Port must be between 65535. Defaulting to 61672.");
+            this.logger.warning("Port must be between 65535. Defaulting to 61672.");
             this.port = 61672;
         }
 
         if (this.isSecureEnabled) {
             if (this.secureKeystoreFile == null) {
-                this.logger.severe("Keystore file is null. Disabling HTTPS/SSL.");
+                this.logger.warning("Keystore file is null. Disabling HTTPS/SSL.");
                 this.isSecureEnabled = false;
             }
             if (this.secureKeystorePassword == null) {
-                this.logger.severe("Keystore password is null. Disabling HTTPS/SSL.");
+                this.logger.warning("Keystore password is null. Disabling HTTPS/SSL.");
                 this.isSecureEnabled = false;
             }
         }
