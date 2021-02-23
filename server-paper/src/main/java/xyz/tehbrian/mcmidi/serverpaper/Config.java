@@ -24,6 +24,8 @@ public class Config {
     private final Logger logger;
 
     private int port;
+    private boolean isWebSocketEnabled;
+    private boolean isHttpEnabled;
     private boolean isSecureEnabled;
     private String secureKeystoreFile;
     private String secureKeystorePassword;
@@ -47,6 +49,8 @@ public class Config {
      */
     public void loadValues() {
         this.port = this.config.getInt("port", 61672);
+        this.isWebSocketEnabled = this.config.getBoolean("web_socket", true);
+        this.isHttpEnabled = this.config.getBoolean("http", true);
         this.isSecureEnabled = this.config.getBoolean("secure.enabled", false);
         this.secureKeystoreFile = this.config.getString("secure.keystore_file");
         this.secureKeystorePassword = this.config.getString("secure.keystore_password");
@@ -69,7 +73,7 @@ public class Config {
     }
 
     /**
-     * What port the McMidi API will use.
+     * What port the web server should use.
      *
      * @return an integer between 0-65535 inclusive
      */
@@ -78,7 +82,25 @@ public class Config {
     }
 
     /**
-     * Whether or not the McMidi API will attempt to use SSL/HTTPS.
+     * Whether the web server should accept WebSocket requests.
+     *
+     * @return a boolean
+     */
+    public boolean isWebSocketEnabled() {
+        return this.isWebSocketEnabled;
+    }
+
+    /**
+     * Whether the web server should accept POST HTTP requests.
+     *
+     * @return a boolean
+     */
+    public boolean isHttpEnabled() {
+        return this.isHttpEnabled;
+    }
+
+    /**
+     * Whether or not the web server should attempt to use SSL/HTTPS.
      *
      * @return a boolean
      */
