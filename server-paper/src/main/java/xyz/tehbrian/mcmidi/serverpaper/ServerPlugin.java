@@ -45,7 +45,8 @@ public final class ServerPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        Objects.requireNonNull(this.sparkController);
-        this.sparkController.stop();
+        if (this.sparkController != null) {
+            this.sparkController.stop();
+        }
     }
 }
