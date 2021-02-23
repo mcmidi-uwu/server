@@ -8,7 +8,7 @@ import xyz.tehbrian.mcmidi.serverpaper.inject.ConfigModule;
 import xyz.tehbrian.mcmidi.serverpaper.inject.PluginModule;
 import xyz.tehbrian.mcmidi.serverpaper.inject.SparkModule;
 
-import java.util.Objects;
+import java.util.logging.Logger;
 
 /**
  * The main plugin class for server.
@@ -35,7 +35,11 @@ public final class ServerPlugin extends JavaPlugin {
             this.sparkController = injector.getInstance(SparkController.class);
             this.sparkController.start();
         } catch (Exception e) {
-            this.getLogger().severe(e.toString());
+            Logger logger = this.getLogger();
+            logger.severe("Something went horribly wrong when bootstrapping the plugin.");
+            logger.severe(e.toString());
+            logger.severe("Disabling the plugin..");
+            this.getServer().getPluginManager().disablePlugin(this);
         }
     }
 
