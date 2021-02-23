@@ -7,17 +7,19 @@ import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * An event which is fired when a note request is received and accepted.
+ * An event which is fired when a note request is received.
  */
 public final class NoteRequestEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLERS = new HandlerList();
     private final Player player;
+    private final RequestType type;
     private final Note note;
     private boolean isCancelled = false;
 
-    public NoteRequestEvent(final Player player, final Note note) {
+    public NoteRequestEvent(final Player player, final RequestType type, final Note note) {
         this.player = player;
+        this.type = type;
         this.note = note;
     }
 
@@ -31,21 +33,30 @@ public final class NoteRequestEvent extends Event implements Cancellable {
     }
 
     /**
-     * Gets the note which was requested.
-     *
-     * @return the note
-     */
-    public Note getNote() {
-        return this.note;
-    }
-
-    /**
-     * Gets player which requested the note.
+     * Gets the player which requested the note.
      *
      * @return the player
      */
     public Player getPlayer() {
         return this.player;
+    }
+
+    /**
+     * Gets the type of request.
+     *
+     * @return the request type
+     */
+    public RequestType getType() {
+        return this.type;
+    }
+
+    /**
+     * Gets the note.
+     *
+     * @return the note
+     */
+    public Note getNote() {
+        return this.note;
     }
 
     @Override
