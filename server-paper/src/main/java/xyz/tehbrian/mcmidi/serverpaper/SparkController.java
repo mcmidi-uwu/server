@@ -21,9 +21,10 @@ import static spark.Spark.post;
 import static spark.Spark.secure;
 
 /**
- * Controls the Spark webserver.
+ * Controls a web server via {@link Spark} which accepts HTTP POST
+ * and/or WebSocket requests.
  */
-public final class SparkController {
+public class SparkController {
 
     /**
      * JavaPlugin reference.
@@ -49,7 +50,7 @@ public final class SparkController {
     }
 
     /**
-     * Starts the Spark web server and sets up the appropriate endpoints and routes.
+     * Starts the web server and sets up the appropriate endpoints and routes.
      */
     public void start() {
         Server server = this.javaPlugin.getServer();
@@ -65,45 +66,49 @@ public final class SparkController {
                 .build();
         JsonAdapter<RawNoteRequest> noteRequestAdapter = moshi.adapter(RawNoteRequest.class);
 
-        options("/mcmidi/note-on", (req, res) -> {
-            res.header("Access-Control-Allow-Origin", req.headers("Origin"));
-            res.header("Access-Control-Allow-Methods", "POST");
-            res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-            res.status(200);
-            return "Please send things. I'm lonely.";
-        });
+        if (this.config.isWebSocketEnabled()) {
+            Spark.webSocket("/mcmidi/note", new NoteWebSocketHandler(this.javaPlugin, noteRequestAdapter));
+        }
 
-        post("/mcmidi/note-on", (req, res) -> {
-            res.header("Access-Control-Allow-Origin", req.headers("Origin"));
-            res.header("Access-Control-Allow-Methods", "POST");
-            res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        if (this.config.isHttpEnabled()) {
+            options("/mcmidi/note", (req, res) -> {
+                res.header("Access-Control-Allow-Origin", req.headers("Origin"));
+                res.header("Access-Control-Allow-Methods", "POST");
+                res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+                res.status(200);
+                return "Please send things. I'm lonely.";
+            });
 
-            RawNoteRequest noteRequest;
-            try {
-                noteRequest = Objects.requireNonNull(noteRequestAdapter.fromJson(req.body()));
-            } catch (IOException | JsonDataException | NumberFormatException e) {
-                res.status(400);
-                return "Couldn't parse the given data. Here's the exception: " + e.toString();
-            }
+            post("/mcmidi/note", (req, res) -> {
+                res.header("Access-Control-Allow-Origin", req.headers("Origin"));
+                res.header("Access-Control-Allow-Methods", "POST");
+                res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
-            Player player = server.getPlayer(noteRequest.getPlayerName());
-            if (player == null) {
-                res.status(406);
-                return "Player with the given player name not found.";
-            }
+                RawNoteRequest noteRequest;
+                try {
+                    noteRequest = Objects.requireNonNull(noteRequestAdapter.fromJson(req.body()));
+                } catch (IOException | JsonDataException | NumberFormatException e) {
+                    res.status(400);
+                    return "Couldn't parse the given data. Here's the exception: " + e.toString();
+                }
 
-            NoteRequestEvent noteRequestEvent = new NoteRequestEvent(player, noteRequest.getNote());
-            server.getScheduler().runTask(this.javaPlugin, () -> server.getPluginManager().callEvent(noteRequestEvent));
+                Player player = server.getPlayer(noteRequest.getPlayerName());
+                if (player == null) {
+                    res.status(406);
+                    return "Player with the given player name not found.";
+                }
 
-            res.status(200);
-            return "Successfully received note request for player " + noteRequest.getPlayerName() + ".";
-        });
+                NoteRequestEvent noteRequestEvent = new NoteRequestEvent(player, noteRequest.getType(), noteRequest.getNote());
+                server.getScheduler().runTask(this.javaPlugin, () -> server.getPluginManager().callEvent(noteRequestEvent));
 
-        post("/mcmidi/note-off", (req, res) -> "Nothing currently happening for note-off.");
+                res.status(200);
+                return "Successfully received note request for player " + player.getName() + ".";
+            });
+        }
     }
 
     /**
-     * Stops the Spark web server.
+     * Stops the web server.
      */
     public void stop() {
         Spark.stop();

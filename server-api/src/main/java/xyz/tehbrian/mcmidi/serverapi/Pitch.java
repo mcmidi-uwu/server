@@ -3,39 +3,42 @@ package xyz.tehbrian.mcmidi.serverapi;
 /**
  * Represents a pitch that can be played as a note in Minecraft and
  * provides helper methods for interacting with and choosing pitches.
+ *
+ * Technically, Minecraft is able to produce pitches from F#1 to F#7,
+ * depending on which instrument is used. However, for the current
+ * oversimplified implementation, only the range for the Minecraft
+ * note block default instrument, the harp, is used.
  */
 public enum Pitch {
-    Fs1(0.5F, 0),
-    G1(0.529732F, 1),
-    Gs1(0.561231F, 2),
-    A1(0.594604F, 3),
-    As1(0.629961F, 4),
-    B1(0.667420F, 5),
-    C1(0.707107F, 6),
-    Cs1(0.749154F, 7),
-    D1(0.793701F, 8),
-    Ds1(0.840896F, 9),
-    E1(0.890899F, 10),
-    F1(0.943874F, 11),
-    Fs2(1F, 12),
-    G2(1.059463F, 13),
-    Gs2(1.122462F, 14),
-    A2(1.189207F, 15),
-    As2(1.259921F, 16),
-    B2(1.334840F, 17),
-    C2(1.414214F, 18),
-    Cs2(1.498307F, 19),
-    D2(1.587401F, 20),
-    Ds2(1.681793F, 21),
-    E2(1.781797F, 22),
-    F2(1.887749F, 23),
-    Fs3(2F, 24);
+    Fs3(0),
+    G3(1),
+    Gs3(2),
+    A3(3),
+    As3(4),
+    B3(5),
+    C4(6),
+    Cs4(7),
+    D4(8),
+    Ds4(9),
+    E4(10),
+    F4(11),
+    Fs4(12),
+    G4(13),
+    Gs4(14),
+    A4(15),
+    As4(16),
+    B4(17),
+    C5(18),
+    Cs5(19),
+    D5(20),
+    Ds5(21),
+    E5(22),
+    F5(23),
+    Fs5(24);
 
-    private final float pitchAsFloat;
     private final int numOfClicks;
 
-    Pitch(final float pitchAsFloat, final int numOfClicks) {
-        this.pitchAsFloat = pitchAsFloat;
+    Pitch(final int numOfClicks) {
         this.numOfClicks = numOfClicks;
     }
 
@@ -93,65 +96,65 @@ public enum Pitch {
             case 40:
             case 41:
             case 42:
-                return Pitch.Fs1;
             case 43:
-                return Pitch.G1;
             case 44:
-                return Pitch.Gs1;
             case 45:
-                return Pitch.A1;
             case 46:
-                return Pitch.As1;
             case 47:
-                return Pitch.B1;
             case 48:
-                return Pitch.C1;
             case 49:
-                return Pitch.Cs1;
             case 50:
-                return Pitch.D1;
             case 51:
-                return Pitch.Ds1;
             case 52:
-                return Pitch.E1;
             case 53:
-                return Pitch.F1;
             case 54:
-                return Pitch.Fs2;
+                return Pitch.Fs3;
             case 55:
-                return Pitch.G2;
+                return Pitch.G3;
             case 56:
-                return Pitch.Gs2;
+                return Pitch.Gs3;
             case 57:
-                return Pitch.A2;
+                return Pitch.A3;
             case 58:
-                return Pitch.As2;
+                return Pitch.As3;
             case 59:
-                return Pitch.B2;
+                return Pitch.B3;
             case 60:
-                return Pitch.C2;
+                return Pitch.C4;
             case 61:
-                return Pitch.Cs2;
+                return Pitch.Cs4;
             case 62:
-                return Pitch.D2;
+                return Pitch.D4;
             case 63:
-                return Pitch.Ds2;
+                return Pitch.Ds4;
             case 64:
-                return Pitch.E2;
+                return Pitch.E4;
             case 65:
-                return Pitch.F2;
+                return Pitch.F4;
             case 66:
+                return Pitch.Fs4;
             case 67:
+                return Pitch.G4;
             case 68:
+                return Pitch.Gs4;
             case 69:
+                return Pitch.A4;
             case 70:
+                return Pitch.As4;
             case 71:
+                return Pitch.B4;
             case 72:
+                return Pitch.C5;
             case 73:
+                return Pitch.Cs5;
             case 74:
+                return Pitch.D5;
             case 75:
+                return Pitch.Ds5;
             case 76:
+                return Pitch.E5;
             case 77:
+                return Pitch.F5;
             case 78:
             case 79:
             case 80:
@@ -202,7 +205,7 @@ public enum Pitch {
             case 125:
             case 126:
             case 127:
-                return Pitch.Fs3;
+                return Pitch.Fs5;
             default:
                 throw new IllegalArgumentException("MIDI Number must be between 0 and 127 inclusive.");
         }
@@ -215,7 +218,9 @@ public enum Pitch {
      * @return a float
      */
     public float asFloat() {
-        return this.pitchAsFloat;
+        // For some information on how this works, see:
+        // https://minecraft.gamepedia.com/Note_Block
+        return (float) Math.pow(2, ((this.numOfClicks - 12F) / 12));
     }
 
     /**
