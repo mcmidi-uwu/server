@@ -18,4 +18,5 @@ public final class PitchAdapter {
     Pitch fromJson(final String pitch) {
         return Pitch.fromMidiNoteNumber(Byte.parseByte(pitch));
     }
+
 }

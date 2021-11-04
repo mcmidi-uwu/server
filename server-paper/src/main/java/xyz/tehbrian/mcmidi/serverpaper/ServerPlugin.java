@@ -8,45 +8,36 @@ import xyz.tehbrian.mcmidi.serverpaper.inject.ConfigModule;
 import xyz.tehbrian.mcmidi.serverpaper.inject.PluginModule;
 import xyz.tehbrian.mcmidi.serverpaper.inject.SparkModule;
 
-import java.util.logging.Logger;
-
-/**
- * The main plugin class for server.
- */
 public final class ServerPlugin extends JavaPlugin {
 
-    /**
-     * SparkController reference.
-     */
     // thanks brocc <3
-    private @MonotonicNonNull SparkController sparkController = null;
+    private @MonotonicNonNull Injector injector;
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
 
         try {
-            Injector injector = Guice.createInjector(
+            this.injector = Guice.createInjector(
                     new PluginModule(this),
                     new ConfigModule(),
                     new SparkModule()
             );
-
-            this.sparkController = injector.getInstance(SparkController.class);
-            this.sparkController.start();
-        } catch (Exception e) {
-            Logger logger = this.getLogger();
-            logger.severe("Something went horribly wrong when bootstrapping the plugin.");
-            logger.severe(e.toString());
-            logger.severe("Disabling the plugin..");
-            this.getServer().getPluginManager().disablePlugin(this);
+        } catch (final Exception e) {
+            this.getLog4JLogger().error("Something went wrong while creating the Guice injector.");
+            this.getLog4JLogger().error("Disabling plugin.");
+            this.setEnabled(false);
+            this.getLog4JLogger().error("Printing stack trace, please send this to the developers:", e);
+            return;
         }
+
+        this.injector.getInstance(SparkController.class).start();
+        this.injector.getInstance(Config.class).loadValues();
     }
 
     @Override
     public void onDisable() {
-        if (this.sparkController != null) {
-            this.sparkController.stop();
-        }
+        this.injector.getInstance(SparkController.class).stop();
     }
+
 }

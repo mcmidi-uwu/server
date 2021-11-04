@@ -22,26 +22,17 @@ import java.util.logging.Logger;
 /**
  * Handles WebSocket requests.
  */
+@SuppressWarnings("ClassCanBeRecord")
 @WebSocket
 public final class NoteWebSocketHandler {
 
-    /**
-     * JavaPlugin reference.
-     */
     private final JavaPlugin javaPlugin;
-    /**
-     * RawNoteRequestAdapter reference.
-     */
     private final JsonAdapter<RawNoteRequest> noteRequestAdapter;
 
-    /**
-     * Constructs {@link NoteWebSocketHandler}.
-     *
-     * @param javaPlugin JavaPlugin reference
-     */
     public NoteWebSocketHandler(
             final @NonNull JavaPlugin javaPlugin,
-            final @NonNull JsonAdapter<RawNoteRequest> noteRequestAdapter) {
+            final @NonNull JsonAdapter<RawNoteRequest> noteRequestAdapter
+    ) {
         this.javaPlugin = javaPlugin;
         this.noteRequestAdapter = noteRequestAdapter;
     }
@@ -58,7 +49,7 @@ public final class NoteWebSocketHandler {
 
     @OnWebSocketError
     public void onError(final Session session, final Throwable throwable) {
-        Logger logger = this.javaPlugin.getLogger();
+        final Logger logger = this.javaPlugin.getLogger();
         logger.warning("Error on WebSocket connection with " + session.getRemoteAddress().toString() + ": " + throwable.toString());
         logger.warning("This should not happen! Printing stack trace..");
         throwable.printStackTrace();
@@ -66,26 +57,27 @@ public final class NoteWebSocketHandler {
 
     @OnWebSocketMessage
     public void message(final Session session, final String message) throws IOException {
-        Server server = this.javaPlugin.getServer();
-        RemoteEndpoint remote = session.getRemote();
+        final Server server = this.javaPlugin.getServer();
+        final RemoteEndpoint remote = session.getRemote();
 
-        RawNoteRequest noteRequest;
+        final RawNoteRequest noteRequest;
         try {
             noteRequest = Objects.requireNonNull(this.noteRequestAdapter.fromJson(message));
-        } catch (IOException | JsonDataException | NumberFormatException e) {
-            remote.sendString("Couldn't parse the given data. Here's the exception: " + e.toString());
+        } catch (final IOException | JsonDataException | NumberFormatException e) {
+            remote.sendString("Couldn't parse the given data. Here's the exception: " + e);
             return;
         }
 
-        Player player = server.getPlayer(noteRequest.getPlayerName());
+        final Player player = server.getPlayer(noteRequest.playerName());
         if (player == null) {
             remote.sendString("Player with the given player name not found.");
             return;
         }
 
-        NoteRequestEvent noteRequestEvent = new NoteRequestEvent(player, noteRequest.getType(), noteRequest.getNote());
+        final NoteRequestEvent noteRequestEvent = new NoteRequestEvent(player, noteRequest.type(), noteRequest.note());
         server.getScheduler().runTask(this.javaPlugin, () -> server.getPluginManager().callEvent(noteRequestEvent));
 
         remote.sendString("Successfully received note request for player " + player.getName() + ".");
     }
+
 }

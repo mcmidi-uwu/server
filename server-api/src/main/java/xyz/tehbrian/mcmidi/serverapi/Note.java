@@ -2,43 +2,13 @@ package xyz.tehbrian.mcmidi.serverapi;
 
 /**
  * Represents a note that can be played.
+ *
+ * @param instrument the instrument
+ * @param pitch      the pitch
+ * @param velocity   the velocity represented as a float from 0 to 1
  */
-public final class Note {
+public record Note(Instrument instrument,
+                   Pitch pitch,
+                   float velocity) {
 
-    private final Instrument instrument;
-    private final Pitch pitch;
-    private final float velocity;
-
-    public Note(final Instrument instrument, final Pitch pitch, final float velocity) {
-        this.instrument = instrument;
-        this.pitch = pitch;
-        this.velocity = velocity;
-    }
-
-    /**
-     * Gets the {@link Instrument}.
-     *
-     * @return the instrument
-     */
-    public Instrument getInstrument() {
-        return this.instrument;
-    }
-
-    /**
-     * Gets the {@link Pitch}.
-     *
-     * @return the pitch
-     */
-    public Pitch getPitch() {
-        return this.pitch;
-    }
-
-    /**
-     * Gets the velocity represented by a float from 0 to 1.
-     *
-     * @return the velocity
-     */
-    public float getVelocity() {
-        return this.velocity;
-    }
 }

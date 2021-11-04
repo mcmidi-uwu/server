@@ -3,8 +3,7 @@ package xyz.tehbrian.mcmidi.serverapi;
 import org.bukkit.Sound;
 
 /**
- * Represents all Minecraft sounds which sound good when
- * played as an instrument.
+ * Minecraft sounds that pitch correctly when played as an instrument.
  */
 public enum Instrument {
     BANJO(Sound.BLOCK_NOTE_BLOCK_BANJO),
@@ -30,7 +29,7 @@ public enum Instrument {
         this.sound = sound;
     }
 
-    public Sound asSound() {
+    public Sound asBukkitSound() {
         return this.sound;
     }
 }

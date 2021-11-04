@@ -9,18 +9,12 @@ import java.util.logging.Logger;
  * Grabs and holds values from a {@link org.bukkit.configuration.file.FileConfiguration}
  * for easy access.
  */
-public class Config {
+public final class Config {
 
     private static final int PORT_MIN = 0;
     private static final int PORT_MAX = 65535;
 
-    /**
-     * FileConfiguration reference.
-     */
     private final FileConfiguration config;
-    /**
-     * Logger reference.
-     */
     private final Logger logger;
 
     private int port;
@@ -31,14 +25,13 @@ public class Config {
     private String secureKeystorePassword;
 
     /**
-     * Constructs {@link Config}.
-     *
      * @param config the {@link FileConfiguration} to use for values
      * @param logger the {@link Logger} to yell at when values are absent
      */
     public Config(
             final @NonNull FileConfiguration config,
-            final @NonNull Logger logger) {
+            final @NonNull Logger logger
+    ) {
         this.config = config;
         this.logger = logger;
     }
@@ -77,7 +70,7 @@ public class Config {
      *
      * @return an integer between 0-65535 inclusive
      */
-    public int getPort() {
+    public int port() {
         return this.port;
     }
 
@@ -113,7 +106,7 @@ public class Config {
      *
      * @return the filepath
      */
-    public String getSecureKeystoreFile() {
+    public String secureKeystoreFile() {
         return this.secureKeystoreFile;
     }
 
@@ -122,7 +115,8 @@ public class Config {
      *
      * @return the password
      */
-    public String getSecureKeystorePassword() {
+    public String secureKeystorePassword() {
         return this.secureKeystorePassword;
     }
+
 }
