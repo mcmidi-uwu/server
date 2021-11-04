@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    `maven-publish`
     id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
@@ -33,10 +34,5 @@ dependencies {
 tasks {
     processResources {
         expand("version" to project.version)
-    }
-
-    shadowJar {
-        archiveBaseName.set("BuildersUtilities")
-        archiveClassifier.set("")
     }
 }

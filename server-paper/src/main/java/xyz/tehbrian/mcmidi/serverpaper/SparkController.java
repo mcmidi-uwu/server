@@ -24,23 +24,12 @@ import static spark.Spark.secure;
  * Controls a web server via {@link Spark} which accepts HTTP POST
  * and/or WebSocket requests.
  */
-public class SparkController {
+@SuppressWarnings("ClassCanBeRecord")
+public final class SparkController {
 
-    /**
-     * JavaPlugin reference.
-     */
     private final JavaPlugin javaPlugin;
-    /**
-     * Config reference.
-     */
     private final Config config;
 
-    /**
-     * Constructs {@link SparkController}.
-     *
-     * @param javaPlugin JavaPlugin reference
-     * @param config     Config reference
-     */
     @Inject
     public SparkController(
             final @NonNull JavaPlugin javaPlugin,
@@ -56,10 +45,10 @@ public class SparkController {
     public void start() {
         final Server server = this.javaPlugin.getServer();
 
-        port(this.config.getPort());
+        port(this.config.port());
 
         if (this.config.isSecureEnabled()) {
-            secure(this.config.getSecureKeystoreFile(), this.config.getSecureKeystorePassword(), null, null);
+            secure(this.config.secureKeystoreFile(), this.config.secureKeystorePassword(), null, null);
         }
 
         final Moshi moshi = new Moshi.Builder()
@@ -93,13 +82,13 @@ public class SparkController {
                     return "Couldn't parse the given data. Here's the exception: " + e;
                 }
 
-                final Player player = server.getPlayer(noteRequest.getPlayerName());
+                final Player player = server.getPlayer(noteRequest.playerName());
                 if (player == null) {
                     res.status(406);
                     return "Player with the given player name not found.";
                 }
 
-                final NoteRequestEvent noteRequestEvent = new NoteRequestEvent(player, noteRequest.getType(), noteRequest.getNote());
+                final NoteRequestEvent noteRequestEvent = new NoteRequestEvent(player, noteRequest.type(), noteRequest.note());
                 server.getScheduler().runTask(this.javaPlugin, () -> server.getPluginManager().callEvent(noteRequestEvent));
 
                 res.status(200);

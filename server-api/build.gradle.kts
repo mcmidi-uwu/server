@@ -1,5 +1,6 @@
 plugins {
-    id("java")
+    `java-library`
+    `maven-publish`
     id("org.checkerframework") version "0.5.16"
 }
 
@@ -19,4 +20,12 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+        }
+    }
 }
