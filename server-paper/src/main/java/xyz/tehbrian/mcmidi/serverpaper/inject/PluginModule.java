@@ -2,6 +2,7 @@ package xyz.tehbrian.mcmidi.serverpaper.inject;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import org.apache.logging.log4j.Logger;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -24,6 +25,11 @@ public final class PluginModule extends AbstractModule {
     @Provides
     public FileConfiguration provideConfig() {
         return this.serverPlugin.getConfig();
+    }
+
+    @Provides
+    public Logger provideLog4JLogger() {
+        return this.serverPlugin.getLog4JLogger();
     }
 
 }
