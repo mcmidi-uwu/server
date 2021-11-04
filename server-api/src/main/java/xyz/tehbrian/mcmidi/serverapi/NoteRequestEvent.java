@@ -23,10 +23,6 @@ public final class NoteRequestEvent extends Event implements Cancellable {
         this.note = note;
     }
 
-    public static HandlerList getHandlerList() {
-        return HANDLERS;
-    }
-
     @Override
     public @NotNull HandlerList getHandlers() {
         return HANDLERS;
