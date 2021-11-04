@@ -44,7 +44,8 @@ public class SparkController {
     @Inject
     public SparkController(
             final @NonNull JavaPlugin javaPlugin,
-            final @NonNull Config config) {
+            final @NonNull Config config
+    ) {
         this.javaPlugin = javaPlugin;
         this.config = config;
     }
@@ -53,7 +54,7 @@ public class SparkController {
      * Starts the web server and sets up the appropriate endpoints and routes.
      */
     public void start() {
-        Server server = this.javaPlugin.getServer();
+        final Server server = this.javaPlugin.getServer();
 
         port(this.config.getPort());
 
@@ -61,10 +62,10 @@ public class SparkController {
             secure(this.config.getSecureKeystoreFile(), this.config.getSecureKeystorePassword(), null, null);
         }
 
-        Moshi moshi = new Moshi.Builder()
+        final Moshi moshi = new Moshi.Builder()
                 .add(new PitchAdapter())
                 .build();
-        JsonAdapter<RawNoteRequest> noteRequestAdapter = moshi.adapter(RawNoteRequest.class);
+        final JsonAdapter<RawNoteRequest> noteRequestAdapter = moshi.adapter(RawNoteRequest.class);
 
         if (this.config.isWebSocketEnabled()) {
             Spark.webSocket("/mcmidi/note", new NoteWebSocketHandler(this.javaPlugin, noteRequestAdapter));
@@ -84,21 +85,21 @@ public class SparkController {
                 res.header("Access-Control-Allow-Methods", "POST");
                 res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
-                RawNoteRequest noteRequest;
+                final RawNoteRequest noteRequest;
                 try {
                     noteRequest = Objects.requireNonNull(noteRequestAdapter.fromJson(req.body()));
-                } catch (IOException | JsonDataException | NumberFormatException e) {
+                } catch (final IOException | JsonDataException | NumberFormatException e) {
                     res.status(400);
-                    return "Couldn't parse the given data. Here's the exception: " + e.toString();
+                    return "Couldn't parse the given data. Here's the exception: " + e;
                 }
 
-                Player player = server.getPlayer(noteRequest.getPlayerName());
+                final Player player = server.getPlayer(noteRequest.getPlayerName());
                 if (player == null) {
                     res.status(406);
                     return "Player with the given player name not found.";
                 }
 
-                NoteRequestEvent noteRequestEvent = new NoteRequestEvent(player, noteRequest.getType(), noteRequest.getNote());
+                final NoteRequestEvent noteRequestEvent = new NoteRequestEvent(player, noteRequest.getType(), noteRequest.getNote());
                 server.getScheduler().runTask(this.javaPlugin, () -> server.getPluginManager().callEvent(noteRequestEvent));
 
                 res.status(200);
@@ -113,4 +114,5 @@ public class SparkController {
     public void stop() {
         Spark.stop();
     }
+
 }

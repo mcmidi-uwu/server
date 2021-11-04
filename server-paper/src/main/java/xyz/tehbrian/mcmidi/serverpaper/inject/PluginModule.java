@@ -41,4 +41,5 @@ public final class PluginModule extends AbstractModule {
         this.bind(ServerPlugin.class).toInstance(this.serverPlugin);
         this.bind(JavaPlugin.class).toInstance(this.serverPlugin);
     }
+
 }

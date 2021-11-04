@@ -26,7 +26,7 @@ public final class ServerPlugin extends JavaPlugin {
         saveDefaultConfig();
 
         try {
-            Injector injector = Guice.createInjector(
+            final Injector injector = Guice.createInjector(
                     new PluginModule(this),
                     new ConfigModule(),
                     new SparkModule()
@@ -34,8 +34,8 @@ public final class ServerPlugin extends JavaPlugin {
 
             this.sparkController = injector.getInstance(SparkController.class);
             this.sparkController.start();
-        } catch (Exception e) {
-            Logger logger = this.getLogger();
+        } catch (final Exception e) {
+            final Logger logger = this.getLogger();
             logger.severe("Something went horribly wrong when bootstrapping the plugin.");
             logger.severe(e.toString());
             logger.severe("Disabling the plugin..");
@@ -49,4 +49,5 @@ public final class ServerPlugin extends JavaPlugin {
             this.sparkController.stop();
         }
     }
+
 }

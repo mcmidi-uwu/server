@@ -3,7 +3,7 @@ package xyz.tehbrian.mcmidi.serverapi;
 /**
  * Represents a pitch that can be played as a note in Minecraft and
  * provides helper methods for interacting with and choosing pitches.
- *
+ * <p>
  * Technically, Minecraft is able to produce pitches from F#1 to F#7,
  * depending on which instrument is used. However, for the current
  * oversimplified implementation, only the range for the Minecraft

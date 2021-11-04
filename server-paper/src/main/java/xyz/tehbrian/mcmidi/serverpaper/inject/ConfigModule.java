@@ -21,9 +21,11 @@ public class ConfigModule extends AbstractModule {
     @Singleton
     public Config provideConfig(
             final @NonNull FileConfiguration fileConfiguration,
-            final @NonNull Logger logger) {
-        Config config = new Config(fileConfiguration, logger);
+            final @NonNull Logger logger
+    ) {
+        final Config config = new Config(fileConfiguration, logger);
         config.loadValues();
         return config;
     }
+
 }

@@ -41,4 +41,5 @@ public final class Note {
     public float getVelocity() {
         return this.velocity;
     }
+
 }

@@ -68,4 +68,5 @@ public final class NoteRequestEvent extends Event implements Cancellable {
     public void setCancelled(final boolean cancel) {
         this.isCancelled = cancel;
     }
+
 }

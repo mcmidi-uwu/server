@@ -46,4 +46,5 @@ public final class RawNoteRequest {
     public Note getNote() {
         return this.note;
     }
+
 }

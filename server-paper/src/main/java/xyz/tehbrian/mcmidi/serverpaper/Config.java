@@ -38,7 +38,8 @@ public class Config {
      */
     public Config(
             final @NonNull FileConfiguration config,
-            final @NonNull Logger logger) {
+            final @NonNull Logger logger
+    ) {
         this.config = config;
         this.logger = logger;
     }
@@ -125,4 +126,5 @@ public class Config {
     public String getSecureKeystorePassword() {
         return this.secureKeystorePassword;
     }
+
 }

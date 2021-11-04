@@ -20,7 +20,9 @@ public class SparkModule extends AbstractModule {
     @Singleton
     public SparkController provideSparkController(
             final @NonNull JavaPlugin javaPlugin,
-            final @NonNull Config config) {
+            final @NonNull Config config
+    ) {
         return new SparkController(javaPlugin, config);
     }
+
 }
