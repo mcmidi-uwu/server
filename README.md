@@ -1,4 +1,4 @@
-# `server`
+# mcmidi-`server`
 A plugin which hosts an endpoint that receives mcmidi note requests and relays them to other plugins.
 
 Installing `server` onto a Minecraft server by itself
