@@ -31,7 +31,7 @@ dependencies {
     implementation(project(":server-api"))
     implementation("com.google.inject:guice:5.0.1")
     implementation("com.sparkjava:spark-core:2.9.3")
-    implementation("com.squareup.moshi:moshi:1.13.0-SNAPSHOT")
+    implementation("com.squareup.moshi:moshi:1.13.0")
 }
 
 tasks {
