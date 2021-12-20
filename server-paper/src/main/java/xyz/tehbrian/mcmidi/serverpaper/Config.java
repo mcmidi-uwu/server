@@ -1,5 +1,6 @@
 package xyz.tehbrian.mcmidi.serverpaper;
 
+import com.google.inject.Inject;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -28,6 +29,7 @@ public final class Config {
      * @param config the {@link FileConfiguration} to use for values
      * @param logger the {@link Logger} to yell at when values are absent
      */
+    @Inject
     public Config(
             final @NonNull FileConfiguration config,
             final @NonNull Logger logger

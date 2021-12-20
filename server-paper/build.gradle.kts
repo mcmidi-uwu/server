@@ -20,6 +20,9 @@ repositories {
     maven("https://oss.sonatype.org/content/groups/public/") {
         name = "sonatype"
     }
+    maven("https://oss.sonatype.org/content/repositories/snapshots/") {
+        name = "sonatype-snapshots"
+    }
 }
 
 dependencies {
@@ -28,7 +31,7 @@ dependencies {
     implementation(project(":server-api"))
     implementation("com.google.inject:guice:5.0.1")
     implementation("com.sparkjava:spark-core:2.9.3")
-    implementation("com.squareup.moshi:moshi:1.11.0")
+    implementation("com.squareup.moshi:moshi:1.13.0-SNAPSHOT")
 }
 
 tasks {

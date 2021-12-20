@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.JsonDataException;
 import com.squareup.moshi.Moshi;
+import org.apache.logging.log4j.Logger;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,14 +29,17 @@ import static spark.Spark.secure;
 public final class SparkController {
 
     private final JavaPlugin javaPlugin;
+    private final Logger logger;
     private final Config config;
 
     @Inject
     public SparkController(
             final @NonNull JavaPlugin javaPlugin,
+            final @NonNull Logger logger,
             final @NonNull Config config
     ) {
         this.javaPlugin = javaPlugin;
+        this.logger = logger;
         this.config = config;
     }
 
@@ -46,9 +50,11 @@ public final class SparkController {
         final Server server = this.javaPlugin.getServer();
 
         port(this.config.port());
+        this.logger.info("Using port {}", this.config.port());
 
         if (this.config.isSecureEnabled()) {
             secure(this.config.secureKeystoreFile(), this.config.secureKeystorePassword(), null, null);
+            this.logger.info("Enabled encrypted, secure connections.");
         }
 
         final Moshi moshi = new Moshi.Builder()
@@ -58,6 +64,7 @@ public final class SparkController {
 
         if (this.config.isWebSocketEnabled()) {
             Spark.webSocket("/mcmidi/note", new NoteWebSocketHandler(this.javaPlugin, noteRequestAdapter));
+            this.logger.info("Created WebSocket endpoint.");
         }
 
         if (this.config.isHttpEnabled()) {
@@ -94,6 +101,8 @@ public final class SparkController {
                 res.status(200);
                 return "Successfully received note request for player " + player.getName() + ".";
             });
+
+            this.logger.info("Created HTTP endpoints.");
         }
     }
 

@@ -31,13 +31,15 @@ public final class ServerPlugin extends JavaPlugin {
             return;
         }
 
-        this.injector.getInstance(SparkController.class).start();
         this.injector.getInstance(Config.class).loadValues();
+        this.injector.getInstance(SparkController.class).start();
     }
 
     @Override
     public void onDisable() {
-        this.injector.getInstance(SparkController.class).stop();
+        if (this.injector != null) {
+            this.injector.getInstance(SparkController.class).stop();
+        }
     }
 
 }
