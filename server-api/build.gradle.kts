@@ -1,7 +1,7 @@
 plugins {
     `java-library`
     `maven-publish`
-    id("org.checkerframework") version "0.5.16"
+    id("org.checkerframework") version "0.6.4"
 }
 
 group = "xyz.tehbrian.mcmidi"
