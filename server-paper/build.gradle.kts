@@ -29,7 +29,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
 
     implementation(project(":server-api"))
-    implementation("com.google.inject:guice:5.0.1")
+    implementation("com.google.inject:guice:5.1.0")
     implementation("com.sparkjava:spark-core:2.9.3")
     implementation("com.squareup.moshi:moshi:1.13.0")
 }
