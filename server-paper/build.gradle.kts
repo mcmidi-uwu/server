@@ -1,6 +1,7 @@
 plugins {
     id("java")
     `maven-publish`
+    id("org.checkerframework") version "0.6.7"
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
