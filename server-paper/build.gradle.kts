@@ -17,12 +17,6 @@ repositories {
     maven("https://papermc.io/repo/repository/maven-public/") {
         name = "papermc"
     }
-    maven("https://oss.sonatype.org/content/groups/public/") {
-        name = "sonatype"
-    }
-    maven("https://oss.sonatype.org/content/repositories/snapshots/") {
-        name = "sonatype-snapshots"
-    }
 }
 
 dependencies {
