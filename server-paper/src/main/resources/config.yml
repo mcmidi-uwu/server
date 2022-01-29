@@ -15,7 +15,7 @@ http: true
 # https://certbot.eff.org/instructions
 # https://ordina-jworks.github.io/security/2019/08/14/Using-Lets-Encrypt-Certificates-In-Java.html
 secure:
-  # Whether or not the web server will attempt to use SSL/HTTPS.
+  # Whether the web server will attempt to use SSL/HTTPS.
   # Must be either true or false.
   enabled: true
   # What keystore file to use.
