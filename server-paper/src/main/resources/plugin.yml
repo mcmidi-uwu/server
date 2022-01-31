@@ -1,4 +1,4 @@
-name: server
+name: mcmidi-server
 description: Hosts a web server that receives note requests and relays them to other plugins.
 authors: [ TehBrian ]
 website: https://github.com/mcmidi-uwu/server
