@@ -4,13 +4,8 @@ plugins {
     id("org.checkerframework") version "0.6.7"
 }
 
-group = "xyz.tehbrian.mcmidi"
-version = "1.0.0-SNAPSHOT"
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-}
+group = rootProject.group
+version = rootProject.version
 
 repositories {
     maven("https://papermc.io/repo/repository/maven-public/") {

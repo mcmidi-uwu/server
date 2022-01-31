@@ -4,8 +4,8 @@ plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
-group = "xyz.tehbrian.mcmidi"
-version = "1.0.0-SNAPSHOT"
+group = rootProject.group
+version = rootProject.version
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
