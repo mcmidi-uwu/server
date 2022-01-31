@@ -1,7 +1,8 @@
 plugins {
     `java-library`
     `maven-publish`
-    id("org.checkerframework") version "0.6.7"
+    id("net.kyori.indra") version "2.0.6"
+    id("net.kyori.indra.checkstyle") version "2.0.6"
 }
 
 group = rootProject.group
