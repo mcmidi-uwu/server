@@ -2,7 +2,7 @@ plugins {
     `java-library`
     id("net.kyori.indra") version "2.0.6"
     id("net.kyori.indra.checkstyle") version "2.0.6"
-    id("net.kyori.indra.publishing") version "2.0.6"
+    id("net.kyori.indra.publishing") version "2.1.0"
 }
 
 group = rootProject.group
