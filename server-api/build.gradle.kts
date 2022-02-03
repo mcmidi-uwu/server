@@ -30,7 +30,7 @@ indra {
 
     configurePublications {
         pom {
-            url.set("https://github.com/TehBrian/tehlib")
+            url.set("https://github.com/mcmidi/server")
 
             developers {
                 developer {
@@ -41,9 +41,9 @@ indra {
             }
 
             scm {
-                connection.set("scm:git:git://https://github.com/TehBrian/tehlib.git")
-                developerConnection.set("scm:git:ssh://https://github.com/TehBrian/tehlib.git")
-                url.set("https://github.com/TehBrian/tehlib.git")
+                connection.set("scm:git:git://https://github.com/mcmidi-uwu/server.git")
+                developerConnection.set("scm:git:ssh://https://github.com/mcmidi-uwu/server.git")
+                url.set("https://github.com/mcmidi-uwu/server.git")
             }
         }
     }
