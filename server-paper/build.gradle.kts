@@ -24,7 +24,7 @@ dependencies {
 
     implementation(project(":server-api"))
     implementation("com.google.inject:guice:5.1.0")
-    implementation("com.sparkjava:spark-core:2.9.3")
+    implementation("com.sparkjava:spark-core:2.9.4")
     implementation("com.squareup.moshi:moshi:1.13.0")
 }
 
