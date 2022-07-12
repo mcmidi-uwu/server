@@ -1,6 +1,6 @@
 plugins {
     id("java")
-    id("org.checkerframework") version "0.6.13"
+    id("org.checkerframework") version "0.6.14"
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
