@@ -36,7 +36,7 @@ indra {
                 developer {
                     id.set("TehBrian")
                     url.set("https://tehbrian.xyz")
-                    email.set("tehbrian@protonmail.com")
+                    email.set("tehbrian@proton.me")
                 }
             }
 
